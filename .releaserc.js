@@ -10,6 +10,7 @@ const TEMPLATE_DIR = path.join(__dirname, ".github", "templates");
 const template = readFileSync(path.join(TEMPLATE_DIR, "release-note.hbs"));
 
 module.exports = {
+  branches: ["master", "main"],
   plugins: [
     [
       "semantic-release-gitmoji",
