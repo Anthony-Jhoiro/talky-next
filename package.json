@@ -18,9 +18,11 @@
     "form-data": "^4.0.0",
     "next": "12.1.6",
     "react": "18.1.0",
-    "react-dom": "18.1.0"
+    "react-dom": "18.1.0",
+    "react-query": "^3.39.1"
   },
   "devDependencies": {
+    "@openapitools/openapi-generator-cli": "^2.5.1",
     "@semantic-release/exec": "^6.0.3",
     "@semantic-release/git": "^10.0.1",
     "@semantic-release/release-notes-generator": "^10.0.3",
@@ -33,7 +35,6 @@
     "eslint-config-next": "12.1.6",
     "husky": "^8.0.0",
     "lint-staged": "^13.0.0",
-    "@openapitools/openapi-generator-cli": "^2.5.1",
     "prettier": "2.6.2",
     "semantic-release": "^19.0.2",
     "semantic-release-gitmoji": "^1.4.4",

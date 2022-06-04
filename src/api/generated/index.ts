@@ -13,8 +13,8 @@
  */
 
 
-export * from "../generated2/posts";
-export * from "../generated2/social";
-export * from "../generated2/users";
+export * from "./posts";
+export * from "./social";
+export * from "./users";
 export * from "./configuration";
-export * from "../generated2/models";
+export * from "./models";
