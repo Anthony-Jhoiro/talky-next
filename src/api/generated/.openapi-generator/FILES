@@ -1,0 +1,15 @@
+api.ts
+api/friend-request-controller-api.ts
+api/friendship-controller-api.ts
+api/message-controller-api.ts
+models/create-friend-request-request-dto.ts
+models/friend-dto.ts
+models/friend-request-dto.ts
+models/friendship-dto.ts
+models/message-dto.ts
+models/message-request-dto.ts
+models/page-message-dto.ts
+models/pageable-object.ts
+models/sort.ts
+models/update-friend-request-request-dto.ts
+models/user-dto.ts

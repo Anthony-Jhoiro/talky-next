@@ -4,3 +4,6 @@ package.json
 yarn.lock
 .github
 *.css
+generated
+*.sh
+*.json
