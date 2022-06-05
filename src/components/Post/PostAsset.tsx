@@ -13,7 +13,7 @@ export const PostAsset = ({ asset }: PostAssetProps) => {
         <Image
           src={asset.url}
           objectFit={"cover"}
-          alt={"asset"}
+          alt={asset.altText}
           layout={"fill"}
         />
       </div>

@@ -1,39 +1,39 @@
 import React from "react";
 import { ProfilePicture } from "../ProfilePicture";
 import { AssetGrid } from "./AssetGrid";
+import { PostDto } from "../../api/generated";
 
 export type AssetType = "IMAGE" | "PDF_FILE" | "OTHER";
 
 export interface Asset {
   type: AssetType;
   url: string;
-}
-
-export interface Post {
-  author: {
-    name: string;
-    image: string;
-    id: string;
-  };
-  content: string;
-  assets: Asset[];
+  altText: string;
 }
 
 export interface PostProps {
-  post: Post;
+  post: PostDto;
 }
 
 export const Post: React.VFC<PostProps> = ({ post }: PostProps) => {
   return (
     <article className={"shadow-lg p-5"}>
       <div className={"pb-4"}>
-        <ProfilePicture user={post.author} />
+        {post.author && <ProfilePicture user={post.author} />}
       </div>
 
       <div>
         <p className={"whitespace-pre-line"}>{post.content}</p>
 
-        <AssetGrid assets={post.assets} />
+        <AssetGrid
+          assets={
+            post.assets?.map((a, i) => ({
+              type: "IMAGE",
+              url: a,
+              altText: `Image posted by ${post.author?.displayedName} ; number ${i}`,
+            })) ?? []
+          }
+        />
       </div>
     </article>
   );

@@ -2,6 +2,11 @@
 import { themes } from "@storybook/theming";
 import * as NextImage from "next/image";
 import "../src/styles/globals.css";
+import { addDecorator } from "@storybook/react"; // <- or your view layer
+import { withTests } from "@storybook/addon-jest";
+import results from "../.jest-test-results.json";
+
+addDecorator(withTests({ results }));
 
 export const decorators = [
   (Story) => (
