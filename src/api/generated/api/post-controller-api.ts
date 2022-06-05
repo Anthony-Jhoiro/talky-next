@@ -111,7 +111,7 @@ export const PostControllerApiAxiosParamCreator = function (configuration?: Conf
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listPosts: async (page?: number, size?: number, sort?: Array<string>, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        listPosts1: async (page?: number, size?: number, sort?: Array<string>, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/v1/posts`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -233,8 +233,8 @@ export const PostControllerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async listPosts(page?: number, size?: number, sort?: Array<string>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<PostDto>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.listPosts(page, size, sort, options);
+        async listPosts1(page?: number, size?: number, sort?: Array<string>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<PostDto>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listPosts1(page, size, sort, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -286,8 +286,8 @@ export const PostControllerApiFactory = function (configuration?: Configuration,
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listPosts(page?: number, size?: number, sort?: Array<string>, options?: any): AxiosPromise<Array<PostDto>> {
-            return localVarFp.listPosts(page, size, sort, options).then((request) => request(axios, basePath));
+        listPosts1(page?: number, size?: number, sort?: Array<string>, options?: any): AxiosPromise<Array<PostDto>> {
+            return localVarFp.listPosts1(page, size, sort, options).then((request) => request(axios, basePath));
         },
         /**
          * List posts from a user
@@ -342,8 +342,8 @@ export class PostControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof PostControllerApi
      */
-    public listPosts(page?: number, size?: number, sort?: Array<string>, options?: AxiosRequestConfig) {
-        return PostControllerApiFp(this.configuration).listPosts(page, size, sort, options).then((request) => request(this.axios, this.basePath));
+    public listPosts1(page?: number, size?: number, sort?: Array<string>, options?: AxiosRequestConfig) {
+        return PostControllerApiFp(this.configuration).listPosts1(page, size, sort, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

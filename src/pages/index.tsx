@@ -1,60 +1,34 @@
-import type { GetServerSideProps, NextPage } from "next";
-import { useQuery } from "react-query";
+import type { NextPage } from "next";
+import { useInfiniteQuery } from "react-query";
 import { listPosts, POSTS_QUERY_NAME } from "../services/posts/listPosts";
-import { PostDto } from "../api/generated";
-import { useUser } from "@auth0/nextjs-auth0";
-import { getProfile, PROFILE_QUERY_NAME } from "../services/users/getProfile";
-import Link from "next/link";
+import { useState } from "react";
+import { Feed } from "../components/Feed";
 
-interface HomePageProps {
-  ssPosts: PostDto[];
-}
-
-const Home: NextPage<HomePageProps> = ({ ssPosts }: HomePageProps) => {
-  const user = useUser();
-  const { data } = useQuery(POSTS_QUERY_NAME, () => listPosts({}), {
-    initialData: ssPosts,
-  });
-
-  const { data: profile } = useQuery(PROFILE_QUERY_NAME, () => getProfile(), {
-    enabled: !!user.user,
-  });
+const Home: NextPage = () => {
+  const [startDate, _setStartDate] = useState(new Date().toISOString());
+  const feedInfiniteQueryState = useInfiniteQuery(
+    POSTS_QUERY_NAME,
+    ({ pageParam }) =>
+      listPosts({
+        searchStart: startDate,
+        page: pageParam,
+      }),
+    {
+      getNextPageParam: (lastPage) =>
+        lastPage.last ? null : (lastPage.number ?? 0) + 1,
+    }
+  );
 
   return (
-    <div>
-      <h2>User :</h2>
-      {user.user && (
-        <>
-          <p>You are {user.user.name}</p>
-          <Link href="/api/auth/logout">Logout</Link>
-        </>
-      )}
-      {!user.user && <Link href="/api/auth/login">Login</Link>}
-
-      <h2>Profile</h2>
-
-      {user.user && (
-        <>
-          {profile && <pre>{JSON.stringify(profile)}</pre>}
-
-          {!profile && <pre>No profile</pre>}
-        </>
-      )}
-
-      <h2>Posts :</h2>
-      <ul>
-        {data && data.map((post) => <li key={post.id}>{post.content}</li>)}
-      </ul>
-    </div>
+    <main className={"bg-background h-screen pt-5"}>
+      <section
+        id="feed"
+        className={"bg-gray-100 p-5 container mx-auto h-full flex flex-col"}
+      >
+        <Feed infiniteQueryState={feedInfiniteQueryState} />
+      </section>
+    </main>
   );
-};
-
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  return {
-    props: {
-      ssPosts: await listPosts({}, ctx),
-    },
-  };
 };
 
 export default Home;

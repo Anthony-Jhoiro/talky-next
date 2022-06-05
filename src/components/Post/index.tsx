@@ -15,17 +15,18 @@ export interface PostProps {
   post: PostDto;
 }
 
-export const Post: React.VFC<PostProps> = ({ post }: PostProps) => {
+export const Post: React.FC<PostProps> = ({ post }: PostProps) => {
   return (
-    <article className={"shadow-lg p-5"}>
+    <article className={"shadow-lg p-5 max-w-5xl bg-white"}>
       <div className={"pb-4"}>
         {post.author && <ProfilePicture user={post.author} />}
       </div>
 
       <div>
-        <p className={"whitespace-pre-line"}>{post.content}</p>
+        <p className={"whitespace-pre-line h-full"}>{post.content}</p>
 
         <AssetGrid
+          identifier={post.id ?? "unknown"}
           assets={
             post.assets?.map((a, i) => ({
               type: "IMAGE",
