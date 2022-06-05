@@ -15,4 +15,5 @@
 
 
 export * from './api/post-controller-api';
+export * from './api/post-controller-v2-api';
 

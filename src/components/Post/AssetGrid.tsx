@@ -5,6 +5,7 @@ import * as Dialog from "@radix-ui/react-dialog";
 import { PostAsset } from "./PostAsset";
 
 export interface AssetGridProps {
+  identifier: string;
   assets: Asset[];
 }
 
@@ -16,7 +17,7 @@ function useModalValueState<T>(initialValue: T | null = null) {
   return { selected, open, close, isOpen: selected !== null };
 }
 
-export const AssetGrid = ({ assets }: AssetGridProps) => {
+export const AssetGrid = ({ identifier, assets }: AssetGridProps) => {
   const { open, close, selected, isOpen } = useModalValueState<number>();
 
   return (
@@ -26,7 +27,7 @@ export const AssetGrid = ({ assets }: AssetGridProps) => {
           // <Dialog.DialogTrigger asChild key={'asset_' + index}>
           <motion.div
             key={"asset_" + index}
-            layoutId={`layout_${index}`}
+            layoutId={`layout_${identifier}_${index}`}
             whileHover={{ scale: 1.1, z: -50 }}
             className={"h-32 basis-1/3 flex-1 relative cursor-pointer"}
             onClick={() => open(index)}
@@ -54,17 +55,19 @@ export const AssetGrid = ({ assets }: AssetGridProps) => {
               </Dialog.Overlay>
               <Dialog.Content
                 className={
-                  "top-1/2 left-1/2 origin-center fixed -translate-x-1/2 -translate-y-1/2"
+                  "top-1/2 left-1/2 origin-center fixed -translate-x-1/2 -translate-y-1/2 outline-none"
                 }
               >
                 <motion.div
                   transition={{ duration: 0.2, ease: "easeInOut" }}
                   layoutId={`layout_${selected}`}
-                  className={"h-64 w-64"}
+                  className={"h-80 w-80"}
                   initial="hidden"
                   animate="show"
                 >
-                  {isOpen && selected && <PostAsset asset={assets[selected]} />}
+                  {isOpen && selected !== null && (
+                    <PostAsset asset={assets[selected]} objectFit={"contain"} />
+                  )}
                 </motion.div>
               </Dialog.Content>
             </Dialog.Portal>

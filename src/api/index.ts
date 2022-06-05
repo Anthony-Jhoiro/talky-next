@@ -6,6 +6,7 @@ import {
   FriendshipControllerApi,
   MessageControllerApi,
   PostControllerApi,
+  PostControllerV2Api,
   UserControllerApi,
 } from "./generated";
 import { NextApiRequest, NextApiResponse } from "next";
@@ -56,6 +57,7 @@ export const messageController = controllerBuilder(
 
 // Post endpoint
 export const postController = controllerBuilder("posts", PostControllerApi);
+export const postControllerV2 = controllerBuilder("posts", PostControllerV2Api);
 
 // User endpoint
 export const userController = controllerBuilder("users", UserControllerApi);

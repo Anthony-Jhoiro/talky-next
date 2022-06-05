@@ -10,6 +10,7 @@ export * from './message-dto';
 export * from './message-request-dto';
 export * from './pageable-object';
 export * from './page-message-dto';
+export * from './page-post-dto';
 export * from './post-dto';
 export * from './sort';
 export * from './update-friend-request-request-dto';
