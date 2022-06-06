@@ -18,7 +18,7 @@ export interface ProfileScreenProps {
 const UserProfileScreen: NextPage<ProfileScreenProps> = ({ profile }) => {
   const [startDate, _setStartDate] = useState(new Date().toISOString());
   const feedInfiniteQueryState = useInfiniteQuery(
-    POSTS_QUERY_NAME,
+    [POSTS_QUERY_NAME, profile.id],
     ({ pageParam }) =>
       listUserPosts({
         authorId: profile?.id as string,
@@ -39,7 +39,7 @@ const UserProfileScreen: NextPage<ProfileScreenProps> = ({ profile }) => {
       }
     >
       <section id="user-profile" className={"w-full mb-8 p-8 bg-white"}>
-        <ProfileCard profile={profile} editable={false} />
+        {profile && <ProfileCard profile={profile} editable={false} />}
       </section>
 
       <section id="user-feed">
@@ -59,6 +59,8 @@ export const getServerSideProps = withPageAuthRequired({
       { userId },
       { req: ctx.req, res: ctx.res }
     );
+
+    console.log(userId, profile);
 
     return {
       props: {

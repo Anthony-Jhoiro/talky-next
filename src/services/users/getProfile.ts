@@ -1,4 +1,4 @@
-import { ServerParams, userController } from "../../api";
+import { ServerParams, userController, userControllerV2 } from "../../api";
 import { AxiosError } from "axios";
 import { UpdateUserRequestDto } from "../../api/generated";
 
@@ -24,7 +24,7 @@ export const getUserProfile = async (
   serverParams?: ServerParams
 ) => {
   try {
-    const response = await userController(serverParams).getUserById(userId);
+    const response = await userControllerV2(serverParams).getUserById(userId);
     return response.data;
   } catch (err: any | AxiosError) {
     return null;

@@ -32,6 +32,39 @@ export const FriendshipControllerApiAxiosParamCreator = function (configuration?
     return {
         /**
          * 
+         * @param {string} friendId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getFriendshipByFriendId: async (friendId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'friendId' is not null or undefined
+            assertParamExists('getFriendshipByFriendId', 'friendId', friendId)
+            const localVarPath = `/api/v1/friends/friend/{friendId}`
+                .replace(`{${"friendId"}}`, encodeURIComponent(String(friendId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @param {string} friendshipId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -119,6 +152,16 @@ export const FriendshipControllerApiFp = function(configuration?: Configuration)
     return {
         /**
          * 
+         * @param {string} friendId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getFriendshipByFriendId(friendId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FriendshipDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getFriendshipByFriendId(friendId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @param {string} friendshipId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -151,6 +194,15 @@ export const FriendshipControllerApiFactory = function (configuration?: Configur
     return {
         /**
          * 
+         * @param {string} friendId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getFriendshipByFriendId(friendId: string, options?: any): AxiosPromise<FriendshipDto> {
+            return localVarFp.getFriendshipByFriendId(friendId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @param {string} friendshipId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -179,6 +231,17 @@ export const FriendshipControllerApiFactory = function (configuration?: Configur
  * @extends {BaseAPI}
  */
 export class FriendshipControllerApi extends BaseAPI {
+    /**
+     * 
+     * @param {string} friendId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof FriendshipControllerApi
+     */
+    public getFriendshipByFriendId(friendId: string, options?: AxiosRequestConfig) {
+        return FriendshipControllerApiFp(this.configuration).getFriendshipByFriendId(friendId, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * 
      * @param {string} friendshipId 

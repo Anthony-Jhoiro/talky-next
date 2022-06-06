@@ -13,80 +13,80 @@
  */
 
 
-import { MessageDto } from './message-dto';
+import { FriendDto } from './friend-dto';
 import { PageableObject } from './pageable-object';
 import { Sort } from './sort';
 
 /**
  * 
  * @export
- * @interface PageMessageDto
+ * @interface PageFriendDto
  */
-export interface PageMessageDto {
+export interface PageFriendDto {
     /**
      * 
      * @type {number}
-     * @memberof PageMessageDto
+     * @memberof PageFriendDto
      */
     'totalPages'?: number;
     /**
      * 
      * @type {number}
-     * @memberof PageMessageDto
+     * @memberof PageFriendDto
      */
     'totalElements'?: number;
     /**
      * 
      * @type {number}
-     * @memberof PageMessageDto
+     * @memberof PageFriendDto
      */
     'size'?: number;
     /**
      * 
-     * @type {Array<MessageDto>}
-     * @memberof PageMessageDto
+     * @type {Array<FriendDto>}
+     * @memberof PageFriendDto
      */
-    'content'?: Array<MessageDto>;
+    'content'?: Array<FriendDto>;
     /**
      * 
      * @type {number}
-     * @memberof PageMessageDto
+     * @memberof PageFriendDto
      */
     'number'?: number;
     /**
      * 
      * @type {Sort}
-     * @memberof PageMessageDto
+     * @memberof PageFriendDto
      */
     'sort'?: Sort;
     /**
      * 
      * @type {number}
-     * @memberof PageMessageDto
+     * @memberof PageFriendDto
      */
     'numberOfElements'?: number;
     /**
      * 
      * @type {PageableObject}
-     * @memberof PageMessageDto
+     * @memberof PageFriendDto
      */
     'pageable'?: PageableObject;
     /**
      * 
      * @type {boolean}
-     * @memberof PageMessageDto
+     * @memberof PageFriendDto
      */
     'first'?: boolean;
     /**
      * 
      * @type {boolean}
-     * @memberof PageMessageDto
+     * @memberof PageFriendDto
      */
     'last'?: boolean;
     /**
      * 
      * @type {boolean}
-     * @memberof PageMessageDto
+     * @memberof PageFriendDto
      */
     'empty'?: boolean;
 }

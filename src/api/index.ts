@@ -4,10 +4,12 @@ import {
   DeviceControllerApi,
   FriendRequestControllerApi,
   FriendshipControllerApi,
+  FriendshipControllerV2Api,
   MessageControllerApi,
   PostControllerApi,
   PostControllerV2Api,
   UserControllerApi,
+  UserControllerV2Api,
 } from "./generated";
 import { NextApiRequest, NextApiResponse } from "next";
 import { getSession } from "@auth0/nextjs-auth0";
@@ -50,6 +52,11 @@ export const friendshipController = controllerBuilder(
   "social",
   FriendshipControllerApi
 );
+
+export const friendshipControllerV2 = controllerBuilder(
+  "social",
+  FriendshipControllerV2Api
+);
 export const messageController = controllerBuilder(
   "social",
   MessageControllerApi
@@ -61,4 +68,5 @@ export const postControllerV2 = controllerBuilder("posts", PostControllerV2Api);
 
 // User endpoint
 export const userController = controllerBuilder("users", UserControllerApi);
+export const userControllerV2 = controllerBuilder("users", UserControllerV2Api);
 export const deviceController = controllerBuilder("users", DeviceControllerApi);

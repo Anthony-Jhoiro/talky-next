@@ -16,5 +16,6 @@
 
 export * from './api/friend-request-controller-api';
 export * from './api/friendship-controller-api';
+export * from './api/friendship-controller-v2-api';
 export * from './api/message-controller-api';
 

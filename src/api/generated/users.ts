@@ -16,4 +16,5 @@
 
 export * from './api/device-controller-api';
 export * from './api/user-controller-api';
+export * from './api/user-controller-v2-api';
 
