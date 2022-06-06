@@ -19,3 +19,20 @@ export const listPosts = async (
   );
   return response.data;
 };
+
+export type ListUserPostsOptions = {
+  authorId: string;
+} & ListPostsOptions;
+
+export const listUserPosts = async (
+  { searchStart, authorId, page = 0, size = 4 }: ListUserPostsOptions,
+  serverParams?: ServerParams
+) => {
+  const response = await postControllerV2(serverParams).listUserPosts(
+    authorId,
+    searchStart,
+    page,
+    size
+  );
+  return response.data;
+};

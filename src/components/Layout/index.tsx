@@ -7,7 +7,7 @@ export interface LayoutProps {
 
 export const Layout: FC<LayoutProps> = ({ children }) => {
   return (
-    <div className={"bg-background"}>
+    <div className={"bg-background h-screen overflow-hidden"}>
       <Navigation />
       {children}
     </div>

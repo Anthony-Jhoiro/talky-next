@@ -20,10 +20,10 @@ export const Navigation = ({}: NavigationProps) => {
     <div className={"flex h-12 bg-white items-center px-8 justify-between"}>
       <div className={"flex gap-3"}>
         <Link href={"/"}>
-          <h2 className={"text-2xl text-primary"}>Talky</h2>
+          <h2 className={"text-2xl text-primary cursor-pointer"}>Talky</h2>
         </Link>
       </div>
-      <div className={"flex gap-3"}>
+      <div className={"flex items-center gap-3"}>
         {profileIsFetching ? (
           <LoadingIndicator />
         ) : (
@@ -39,7 +39,15 @@ export const Navigation = ({}: NavigationProps) => {
                         Log-out
                       </button>
                     </Link>
-                    <ProfilePicture user={profileData} imageOnly={true} />
+                    <Link href={"/profile"}>
+                      <div
+                        className={
+                          "cursor-pointer h-full flex items-center justify-center"
+                        }
+                      >
+                        <ProfilePicture user={profileData} imageOnly={true} />
+                      </div>
+                    </Link>
                   </>
                 )}
                 {!profileData && (
