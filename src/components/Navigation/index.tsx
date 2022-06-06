@@ -6,6 +6,8 @@ import {
   PROFILE_QUERY_NAME,
 } from "../../services/users/getProfile";
 import { LoadingIndicator } from "../LoadingIndicator";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 
 export interface NavigationProps {}
 
@@ -34,6 +36,16 @@ export const Navigation = ({}: NavigationProps) => {
               <>
                 {profileData && (
                   <>
+                    <Link href={"/friendRequests"}>
+                      <button
+                        className={
+                          "bg-primary rounded text-white p-2 flex items-center gap-1"
+                        }
+                      >
+                        <FontAwesomeIcon icon={faEnvelope} />
+                        <span>My friend requests</span>
+                      </button>
+                    </Link>
                     <Link href={"/api/auth/logout"}>
                       <button className={"bg-secondary rounded text-white p-2"}>
                         Log-out

@@ -3,7 +3,7 @@ import React, { FC, useState } from "react";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCamera, faCheck, faPen } from "@fortawesome/free-solid-svg-icons";
-import { useMutation } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import {
   getProfilePictureUploadLink,
   PROFILE_QUERY_NAME,
@@ -18,9 +18,13 @@ export interface ProfileCardProps {
 }
 
 export const ProfileCard: FC<ProfileCardProps> = ({ profile, editable }) => {
+  const queryClient = useQueryClient();
   const mutation = useMutation(
     PROFILE_QUERY_NAME,
-    (request: UpdateUserRequestDto) => updateUser(request)
+    (request: UpdateUserRequestDto) => updateUser(request),
+    {
+      onSuccess: () => queryClient.invalidateQueries(PROFILE_QUERY_NAME),
+    }
   );
 
   const [isUploadingProfilePicture, setIsUploadingProfilePicture] =
