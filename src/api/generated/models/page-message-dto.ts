@@ -61,16 +61,16 @@ export interface PageMessageDto {
     'sort'?: Sort;
     /**
      * 
-     * @type {number}
-     * @memberof PageMessageDto
-     */
-    'numberOfElements'?: number;
-    /**
-     * 
      * @type {PageableObject}
      * @memberof PageMessageDto
      */
     'pageable'?: PageableObject;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageMessageDto
+     */
+    'numberOfElements'?: number;
     /**
      * 
      * @type {boolean}

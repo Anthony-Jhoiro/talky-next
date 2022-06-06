@@ -18,7 +18,6 @@ export const Feed = ({
   },
 }: FeedProps) => {
   const onFeedScroll: UIEventHandler<HTMLElement> = ({ currentTarget }) => {
-    console.log(currentTarget.scrollHeight);
     if (
       hasNextPage &&
       !isFetchingNextPage &&
