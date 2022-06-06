@@ -1,8 +1,8 @@
 /* tslint:disable */
 /* eslint-disable */
 /**
- * Social API
- * Documentation of Social API
+ * Users API
+ * Documentation of Users API
  *
  * The version of the OpenAPI document: v1
  * 
@@ -13,80 +13,80 @@
  */
 
 
-import { MessageDto } from './message-dto';
 import { PageableObject } from './pageable-object';
 import { Sort } from './sort';
+import { UserDto } from './user-dto';
 
 /**
  * 
  * @export
- * @interface PageMessageDto
+ * @interface PageUserDto
  */
-export interface PageMessageDto {
+export interface PageUserDto {
     /**
      * 
      * @type {number}
-     * @memberof PageMessageDto
+     * @memberof PageUserDto
      */
     'totalPages'?: number;
     /**
      * 
      * @type {number}
-     * @memberof PageMessageDto
+     * @memberof PageUserDto
      */
     'totalElements'?: number;
     /**
      * 
      * @type {number}
-     * @memberof PageMessageDto
+     * @memberof PageUserDto
      */
     'size'?: number;
     /**
      * 
-     * @type {Array<MessageDto>}
-     * @memberof PageMessageDto
+     * @type {Array<UserDto>}
+     * @memberof PageUserDto
      */
-    'content'?: Array<MessageDto>;
+    'content'?: Array<UserDto>;
     /**
      * 
      * @type {number}
-     * @memberof PageMessageDto
+     * @memberof PageUserDto
      */
     'number'?: number;
     /**
      * 
      * @type {Sort}
-     * @memberof PageMessageDto
+     * @memberof PageUserDto
      */
     'sort'?: Sort;
     /**
      * 
      * @type {number}
-     * @memberof PageMessageDto
+     * @memberof PageUserDto
      */
     'numberOfElements'?: number;
     /**
      * 
      * @type {PageableObject}
-     * @memberof PageMessageDto
+     * @memberof PageUserDto
      */
     'pageable'?: PageableObject;
     /**
      * 
      * @type {boolean}
-     * @memberof PageMessageDto
+     * @memberof PageUserDto
      */
     'first'?: boolean;
     /**
      * 
      * @type {boolean}
-     * @memberof PageMessageDto
+     * @memberof PageUserDto
      */
     'last'?: boolean;
     /**
      * 
      * @type {boolean}
-     * @memberof PageMessageDto
+     * @memberof PageUserDto
      */
     'empty'?: boolean;
 }

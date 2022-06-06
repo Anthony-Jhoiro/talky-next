@@ -7,7 +7,11 @@ import {
 } from "../../services/users/getProfile";
 import { LoadingIndicator } from "../LoadingIndicator";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
+import {
+  faEnvelope,
+  faSearch,
+  faUsers,
+} from "@fortawesome/free-solid-svg-icons";
 
 export interface NavigationProps {}
 
@@ -36,6 +40,26 @@ export const Navigation = ({}: NavigationProps) => {
               <>
                 {profileData && (
                   <>
+                    <Link href={"/search"}>
+                      <button
+                        className={
+                          "bg-tertiary rounded text-white p-2 flex items-center gap-1"
+                        }
+                      >
+                        <FontAwesomeIcon icon={faSearch} />
+                        <span>Search users</span>
+                      </button>
+                    </Link>
+                    <Link href={"/friends"}>
+                      <button
+                        className={
+                          "bg-primary rounded text-white p-2 flex items-center gap-1"
+                        }
+                      >
+                        <FontAwesomeIcon icon={faUsers} />
+                        <span>My friends</span>
+                      </button>
+                    </Link>
                     <Link href={"/friendRequests"}>
                       <button
                         className={

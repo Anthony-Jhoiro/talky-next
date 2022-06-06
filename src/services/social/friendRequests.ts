@@ -1,5 +1,6 @@
 import { friendRequestController, ServerParams } from "../../api";
 import {
+  CreateFriendRequestRequestDto,
   UpdateFriendRequestRequestDto,
   UpdateFriendRequestRequestDtoStatusEnum,
 } from "../../api/generated";
@@ -42,3 +43,6 @@ export const acceptFriendRequest = async ({
     UpdateFriendRequestRequestDtoStatusEnum.ACCEPTED
   );
 };
+
+export const sendFriendRequest = (request: CreateFriendRequestRequestDto) =>
+  friendRequestController().createFriendRequest(request);

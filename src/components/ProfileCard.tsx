@@ -1,8 +1,13 @@
-import { UpdateUserRequestDto, UserDto } from "../api/generated";
+import { ProfileDto, UpdateUserRequestDto, UserDto } from "../api/generated";
 import React, { FC, useState } from "react";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCamera, faCheck, faPen } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCamera,
+  faCheck,
+  faEnvelope,
+  faPen,
+} from "@fortawesome/free-solid-svg-icons";
 import { useMutation, useQueryClient } from "react-query";
 import {
   getProfilePictureUploadLink,
@@ -11,14 +16,32 @@ import {
 } from "../services/users/getProfile";
 import { uploadAsset } from "../services/assets/uploadAssets";
 import { LoadingIndicator } from "./LoadingIndicator";
+import {
+  FRIEND_REQUESTS_QUERY_NAME,
+  sendFriendRequest,
+} from "../services/social/friendRequests";
 
 export interface ProfileCardProps {
-  profile: UserDto;
+  profile: UserDto | ProfileDto;
   editable: boolean;
+}
+
+function isProfileDto(dto: UserDto | ProfileDto): dto is ProfileDto {
+  return "areFriends" in dto;
 }
 
 export const ProfileCard: FC<ProfileCardProps> = ({ profile, editable }) => {
   const queryClient = useQueryClient();
+
+  const sendFriendRequestMutation = useMutation(
+    FRIEND_REQUESTS_QUERY_NAME,
+    () => sendFriendRequest({ recipient: profile.id }),
+    {
+      onSuccess: () =>
+        queryClient.invalidateQueries(FRIEND_REQUESTS_QUERY_NAME),
+    }
+  );
+
   const mutation = useMutation(
     PROFILE_QUERY_NAME,
     (request: UpdateUserRequestDto) => updateUser(request),
@@ -118,50 +141,83 @@ export const ProfileCard: FC<ProfileCardProps> = ({ profile, editable }) => {
 
       {/* Displayed named */}
 
-      <div>
-        {!isEditingDisplayedName && (
-          <h3 className={"text-2xl text-primary font-semibold"}>
-            <span>{profile.displayedName}</span>
-            {editable && (
-              <button
-                className={"ml-3"}
-                onClick={() => setIsEditingDisplayedName(true)}
+      <div className={"flex flex-col gap-3"}>
+        <div>
+          {!isEditingDisplayedName && (
+            <h3 className={"text-2xl text-primary font-semibold"}>
+              <span>{profile.displayedName}</span>
+              {editable && (
+                <button
+                  className={"ml-3"}
+                  onClick={() => setIsEditingDisplayedName(true)}
+                >
+                  <FontAwesomeIcon icon={faPen} />
+                </button>
+              )}
+            </h3>
+          )}
+          {isEditingDisplayedName && (
+            <form onSubmit={onNewDisplayedNameSubmit}>
+              <label
+                htmlFor="newDisplayName"
+                className={"text-sm text-primary"}
               >
-                <FontAwesomeIcon icon={faPen} />
-              </button>
-            )}
-          </h3>
-        )}
-        {isEditingDisplayedName && (
-          <form onSubmit={onNewDisplayedNameSubmit}>
-            <label htmlFor="newDisplayName" className={"text-sm text-primary"}>
-              Displayed Name
-            </label>
+                Displayed Name
+              </label>
 
-            <div className={"flex gap-3"}>
-              <input
-                type="text"
-                id={"newDisplayName"}
-                className={
-                  "outline-none border-b-2 focus:border-primary border-gray "
-                }
-                autoFocus={true}
-                value={newDisplayedName}
-                onChange={(e) => setNewDisplayedName(e.target.value)}
-                disabled={mutation.isLoading}
-              />
-              <button
-                type={"submit"}
-                className={
-                  "flex items-center justify-center h-8 w-8 text-white rounded " +
-                  (mutation.isLoading ? "bg-gray" : "bg-primary")
-                }
-                disabled={mutation.isLoading}
-              >
-                <FontAwesomeIcon icon={faCheck} />
-              </button>
-            </div>
-          </form>
+              <div className={"flex gap-3"}>
+                <input
+                  type="text"
+                  id={"newDisplayName"}
+                  className={
+                    "outline-none border-b-2 focus:border-primary border-gray "
+                  }
+                  autoFocus={true}
+                  value={newDisplayedName}
+                  onChange={(e) => setNewDisplayedName(e.target.value)}
+                  disabled={mutation.isLoading}
+                />
+                <button
+                  type={"submit"}
+                  className={
+                    "flex items-center justify-center h-8 w-8 text-white rounded " +
+                    (mutation.isLoading ? "bg-gray" : "bg-primary")
+                  }
+                  disabled={mutation.isLoading}
+                >
+                  <FontAwesomeIcon icon={faCheck} />
+                </button>
+              </div>
+            </form>
+          )}
+        </div>
+
+        {isProfileDto(profile) && (
+          <div>
+            {profile.areFriends && <p>You are friends !</p>}
+            {!profile.areFriends && (
+              <>
+                {sendFriendRequestMutation.isIdle && (
+                  <button
+                    className={
+                      "bg-primary text-white px-4 py-2 rounded flex gap-1 items-center"
+                    }
+                    onClick={() => sendFriendRequestMutation.mutate()}
+                  >
+                    <FontAwesomeIcon icon={faEnvelope} />
+                    <span>Send a friend request</span>
+                  </button>
+                )}
+                {sendFriendRequestMutation.isLoading && <LoadingIndicator />}
+                {sendFriendRequestMutation.isError && (
+                  <p>There was an error creating the request.</p>
+                )}
+                {sendFriendRequestMutation.isSuccess && (
+                  <p>Your request has been sent successfully.</p>
+                )}
+              </>
+            )}
+          </div>
         )}
       </div>
     </div>

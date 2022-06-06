@@ -142,9 +142,9 @@ export const UserControllerApiAxiosParamCreator = function (configuration?: Conf
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getUserById: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getUserById1: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('getUserById', 'id', id)
+            assertParamExists('getUserById1', 'id', id)
             const localVarPath = `/api/v1/users/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -328,8 +328,8 @@ export const UserControllerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getUserById(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserDto>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getUserById(id, options);
+        async getUserById1(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getUserById1(id, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -406,8 +406,8 @@ export const UserControllerApiFactory = function (configuration?: Configuration,
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getUserById(id: string, options?: any): AxiosPromise<UserDto> {
-            return localVarFp.getUserById(id, options).then((request) => request(axios, basePath));
+        getUserById1(id: string, options?: any): AxiosPromise<UserDto> {
+            return localVarFp.getUserById1(id, options).then((request) => request(axios, basePath));
         },
         /**
          * List users
@@ -487,8 +487,8 @@ export class UserControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof UserControllerApi
      */
-    public getUserById(id: string, options?: AxiosRequestConfig) {
-        return UserControllerApiFp(this.configuration).getUserById(id, options).then((request) => request(this.axios, this.basePath));
+    public getUserById1(id: string, options?: AxiosRequestConfig) {
+        return UserControllerApiFp(this.configuration).getUserById1(id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
