@@ -45,6 +45,18 @@ Empty.loaders = [
   }),
 ];
 
+export const InError = Default.bind({});
+InError.args = {
+  value: [],
+  errorMessage: "This is an error message",
+};
+
+InError.loaders = [
+  async () => ({
+    value: [],
+  }),
+];
+
 export const Full = Default.bind({});
 Full.args = {
   maxFiles: 3,

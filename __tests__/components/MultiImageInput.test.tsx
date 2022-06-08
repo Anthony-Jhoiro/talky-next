@@ -3,7 +3,7 @@ import "@testing-library/jest-dom";
 import * as stories from "../../src/components/MultiImageInput/MultiImageInput.stories";
 import { composeStories } from "@storybook/testing-react";
 
-const { Default, Full, Empty } = composeStories(stories);
+const { Default, Full, InError, Empty } = composeStories(stories);
 
 describe("LoadingIndicator", () => {
   beforeEach(() => {
@@ -40,5 +40,12 @@ describe("LoadingIndicator", () => {
 
     const errorMessage = screen.queryByTestId("error-message");
     expect(errorMessage).toBe(null);
+  });
+
+  it("error story shows an error message", () => {
+    render(<InError />);
+
+    const errorMessage = screen.queryByTestId("error-message");
+    expect(errorMessage).toHaveTextContent("This is an error message");
   });
 });
