@@ -83,12 +83,17 @@ export const MultiImageInput: FC<MultiImageInputProps> = ({
         Add an image
       </label>
       {files.length >= maxFiles && (
-        <p>
+        <p data-testid={"limit-error-message"}>
           You have reached the limit of <span>{maxFiles}</span> files
         </p>
       )}
       {errorMessage && (
-        <p className={"border-l-2 border-l-red-500 pl-2"}>{errorMessage}</p>
+        <p
+          data-testid={"error-message"}
+          className={"border-l-2 border-l-red-500 pl-2"}
+        >
+          {errorMessage}
+        </p>
       )}
     </div>
   );
