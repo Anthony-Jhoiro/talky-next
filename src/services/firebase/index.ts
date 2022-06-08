@@ -16,21 +16,28 @@ const messaging = getMessaging(firebaseApp);
 export const getTokenWrapper = (setTokenFound: (_v: string | null) => void) => {
   return getToken(messaging, {
     vapidKey: process.env.NEXT_PUBLIC_FIREBASE_VAPIDKEY,
-  }).then((currentToken) => {
-    if (currentToken) {
-      setTokenFound(currentToken);
-      // Track the token -> client mapping, by sending to backend server
-      // show on the UI that permission is secured
-    } else {
+  })
+    .then((currentToken) => {
+      if (currentToken) {
+        setTokenFound(currentToken);
+        // Track the token -> client mapping, by sending to backend server
+        // show on the UI that permission is secured
+      } else {
+        setTokenFound(null);
+        // shows on the UI that permission is required
+      }
+    })
+    .catch(() => {
+      // This catch blocks prevent an error from beeing throwing if the
+      // notifications are not allowed
       setTokenFound(null);
-      // shows on the UI that permission is required
-    }
-  });
+    });
 };
 
 export const onMessageListener = () =>
   new Promise<MessagePayload>((resolve) => {
     onMessage(messaging, (payload) => {
+      console.log({ payload });
       resolve(payload);
     });
   });

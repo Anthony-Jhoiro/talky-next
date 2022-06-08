@@ -20,7 +20,8 @@ export const DiscussionInput: FC<DiscussionInputProps> = ({
   return (
     <div className={"h-full w-full px-4 py-2"}>
       <form onSubmit={_sendMessage} className={"flex"}>
-        <textarea
+        <input
+          type="text"
           placeholder={"Your message"}
           className={"grow outline-none resize-none h-min"}
           autoFocus

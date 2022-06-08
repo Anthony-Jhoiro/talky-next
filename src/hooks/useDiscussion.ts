@@ -1,7 +1,8 @@
 import { MessageDto } from "../api/generated";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { listMessages, sendMessage } from "../services/social/messages";
 import { useMutation } from "react-query";
+import { useNotifications } from "../components/providers/FirebaseMessagingProvider";
 
 export const PAGE_FETCH_LIMIT = 10;
 
@@ -79,6 +80,20 @@ export function useDiscussion(
     setMessages(newMessagesState);
     updateCursors(newMessagesState);
   };
+
+  const { notifications } = useNotifications();
+  useEffect(() => {
+    if (notifications.length > 0) {
+      const lastNotification = notifications[notifications.length - 1];
+
+      if (lastNotification.friendshipId === friendshipId) {
+        const index = messages.findIndex((m) => m.id === lastNotification.id);
+        if (index === -1) {
+          setMessages([...messages, lastNotification]);
+        }
+      }
+    }
+  }, [friendshipId, messages, notifications]);
 
   return {
     messages,
