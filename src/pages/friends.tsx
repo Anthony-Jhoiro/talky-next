@@ -44,7 +44,7 @@ const FriendsScreen = () => {
             <Fragment key={i}>
               {group.content?.map((friendDto) => (
                 <div key={friendDto.id} className={"p-2 max-w-5xl basis-1/2"}>
-                  <Link href={"/profile/" + friendDto.id}>
+                  <Link href={"/discussion/" + friendDto.friendshipId}>
                     <div
                       className={
                         "bg-white p-5 shadow hover:shadow-lg transition-shadow cursor-pointer"

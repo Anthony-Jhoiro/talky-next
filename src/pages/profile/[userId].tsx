@@ -60,8 +60,6 @@ export const getServerSideProps = withPageAuthRequired({
       { req: ctx.req, res: ctx.res }
     );
 
-    console.log(userId, profile);
-
     return {
       props: {
         profile,

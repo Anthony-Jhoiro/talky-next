@@ -23,7 +23,9 @@ export const Navigation = ({}: NavigationProps) => {
   } = useQuery(PROFILE_QUERY_NAME, () => getProfile());
 
   return (
-    <div className={"flex h-12 bg-white items-center px-8 justify-between"}>
+    <div
+      className={"flex h-12 bg-white items-center px-8 py-2 justify-between"}
+    >
       <div className={"flex gap-3"}>
         <Link href={"/"}>
           <h2 className={"text-2xl text-primary cursor-pointer"}>Talky</h2>

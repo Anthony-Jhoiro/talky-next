@@ -19,8 +19,8 @@ export const Default = Template.bind({});
 Default.args = {
   user: {
     id: "1234",
-    name: "John Doe",
-    image: "/woman_1.jpg",
+    displayedName: "John Doe",
+    profilePicture: "/woman_1.jpg",
   },
   imageOnly: false,
 };
