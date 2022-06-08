@@ -14,7 +14,10 @@ import {
   PROFILE_QUERY_NAME,
   updateUser,
 } from "../services/users/getProfile";
-import { uploadAsset } from "../services/assets/uploadAssets";
+import {
+  extractAssetNameFromLink,
+  uploadAsset,
+} from "../services/assets/uploadAssets";
 import { LoadingIndicator } from "./LoadingIndicator";
 import {
   FRIEND_REQUESTS_QUERY_NAME,
@@ -75,7 +78,7 @@ export const ProfileCard: FC<ProfileCardProps> = ({ profile, editable }) => {
       await uploadAsset(link, fileBuffer);
 
       mutation.mutate({
-        profilePicture: link.split("?")[0].split("/").pop(),
+        profilePicture: extractAssetNameFromLink(link),
       });
       setIsUploadingProfilePicture(false);
     }

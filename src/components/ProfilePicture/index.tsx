@@ -30,6 +30,7 @@ export const ProfilePicture: React.VFC<ProfilePictureProps> = ({
             alt={`Photo de profil de ${name}`}
             objectFit={"cover"}
             layout={"fill"}
+            unoptimized
           />
         )}
       </div>
