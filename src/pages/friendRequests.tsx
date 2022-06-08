@@ -8,6 +8,7 @@ import { FriendRequest } from "../components/FriendRequest";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHome } from "@fortawesome/free-solid-svg-icons";
+import { InfiniteScrollContainer } from "../components/InfiniteScrollContainer";
 
 const FriendRequestsScreen = () => {
   const { data, isFetching } = useQuery(FRIEND_REQUESTS_QUERY_NAME, () =>
@@ -15,15 +16,18 @@ const FriendRequestsScreen = () => {
   );
 
   return (
-    <main
+    <InfiniteScrollContainer
       id={"friendRequestsList"}
-      className={
-        "container mx-auto bg-gray-100 h-full overflow-y-scroll mt-5 text-center p-8"
-      }
+      fetchNextPage={() => {}}
+      hasNextPage={false}
     >
-      {isFetching && <LoadingIndicator />}
-
       <h2 className={"text-2xl font-semibold mb-12"}>Your friend requests</h2>
+
+      {isFetching && (
+        <div className={"flex justify-center"}>
+          <LoadingIndicator />
+        </div>
+      )}
 
       {!isFetching &&
         data &&
@@ -53,7 +57,7 @@ const FriendRequestsScreen = () => {
           </Link>
         </div>
       )}
-    </main>
+    </InfiniteScrollContainer>
   );
 };
 

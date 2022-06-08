@@ -24,6 +24,7 @@ const Home: NextPage = () => {
     <InfiniteScrollContainer
       fetchNextPage={feedInfiniteQueryState.fetchNextPage}
       hasNextPage={feedInfiniteQueryState.hasNextPage ?? true}
+      scrollerClassName={"flex flex-col items-center "}
       id={"feed"}
     >
       <Feed data={feedInfiniteQueryState.data} />

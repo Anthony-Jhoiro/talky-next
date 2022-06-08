@@ -1,18 +1,21 @@
 import { ComponentPropsWithoutRef, FC, ReactNode } from "react";
 import InfiniteScroll from "react-infinite-scroller";
 import { LoadingIndicator } from "../LoadingIndicator";
+import clsx from "clsx";
 
 export interface InfiniteScrollContainerProps
   extends ComponentPropsWithoutRef<"div"> {
   fetchNextPage: () => void;
   hasNextPage: boolean;
   children: ReactNode;
+  scrollerClassName?: string;
 }
 
 export const InfiniteScrollContainer: FC<InfiniteScrollContainerProps> = ({
   fetchNextPage,
   hasNextPage,
   children,
+  scrollerClassName = "",
   ...divProps
 }) => {
   return (
@@ -27,7 +30,7 @@ export const InfiniteScrollContainer: FC<InfiniteScrollContainerProps> = ({
           <InfiniteScroll
             loadMore={() => fetchNextPage()}
             hasMore={hasNextPage}
-            className={"w-full h-full flex flex-col items-center "}
+            className={clsx("w-full h-full", scrollerClassName)}
             threshold={250}
             useWindow={false}
             loader={
