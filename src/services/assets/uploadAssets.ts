@@ -8,3 +8,7 @@ export const uploadAsset = (link: string, fileData: ArrayBuffer) =>
       "Content-Type": "application/octet-stream",
     },
   }).then(null);
+
+export const extractAssetNameFromLink = (url: string) => {
+  return url.split("?")[0].split("/").pop();
+};

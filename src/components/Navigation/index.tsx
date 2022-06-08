@@ -8,6 +8,7 @@ import {
 import { LoadingIndicator } from "../LoadingIndicator";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
+  faAdd,
   faEnvelope,
   faSearch,
   faUsers,
@@ -42,6 +43,16 @@ export const Navigation = ({}: NavigationProps) => {
               <>
                 {profileData && (
                   <>
+                    <Link href={"/new"}>
+                      <button
+                        className={
+                          "bg-primary rounded text-white p-2 flex items-center gap-1"
+                        }
+                      >
+                        <FontAwesomeIcon icon={faAdd} />
+                        <span>New Post</span>
+                      </button>
+                    </Link>
                     <Link href={"/search"}>
                       <button
                         className={
