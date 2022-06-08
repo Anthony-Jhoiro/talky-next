@@ -1,10 +1,6 @@
 import { NextPage } from "next";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { CreatePostRequestDtoPrivacyEnum } from "../api/generated";
-import { ChangeEventHandler, useState } from "react";
-import Image from "next/image";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { LoadingIndicator } from "../components/LoadingIndicator";
 import {
   createPost,
@@ -16,10 +12,12 @@ import {
 } from "../services/assets/uploadAssets";
 import { useMutation } from "react-query";
 import { useRouter } from "next/router";
+import { MultiImageInput } from "../components/MultiImageInput";
 
 interface PostFormInputs {
   content: string;
   privacy: CreatePostRequestDtoPrivacyEnum;
+  images: File[];
 }
 
 const MAX_IMAGE_COUNT = 10;
@@ -31,40 +29,26 @@ const PostCreationScreen: NextPage = () => {
     register,
     handleSubmit,
     formState: { isSubmitting, errors },
+    control,
   } = useForm<PostFormInputs>({
     defaultValues: {
       content: "",
       privacy: CreatePostRequestDtoPrivacyEnum.PUBLIC,
+      images: [],
     },
   });
 
   const uploadMutation = useMutation(createPost);
 
-  const [images, setImages] = useState<File[]>([]);
-
-  const onInputImage: ChangeEventHandler<HTMLInputElement> = (e) => {
-    if (e.target.files) {
-      const addedFiles = Array.from(e.target.files).slice(
-        0,
-        MAX_IMAGE_COUNT - images.length
-      );
-      setImages([...images, ...addedFiles]);
-    }
-  };
-
-  const removeImage = (index: number) => {
-    setImages([...images.slice(0, index), ...images.slice(index + 1)]);
-  };
-
   const onSubmit: SubmitHandler<PostFormInputs> = async (data) => {
     // Upload images
     const imagesUrls = await Promise.all(
-      images.map(async (image) => {
+      data.images.map(async (file) => {
         const [{ url }, buffer] = await Promise.all([
           getPostAssetUploadLink({
-            extention: image.type.split("/").pop() ?? "jpg",
+            extention: file.type.split("/").pop() ?? "jpg",
           }),
-          image.arrayBuffer(),
+          file.arrayBuffer(),
         ]);
 
         await uploadAsset(url as string, buffer);
@@ -147,49 +131,17 @@ const PostCreationScreen: NextPage = () => {
           </div>
 
           <div id={"image-selector"} className={"my-8"}>
-            {images.length > 0 && (
-              <div className={"overflow-x-scroll whitespace-nowrap"}>
-                {images.map((image, i) => (
-                  <div
-                    key={i}
-                    className={
-                      "h-32 w-32 bg-gray-800 relative overflow-hidden inline-block ml-3"
-                    }
-                    onClick={() => removeImage(i)}
-                  >
-                    <Image
-                      src={URL.createObjectURL(image)}
-                      alt={"Image uploaded by you ; No " + i + 1}
-                      objectFit={"cover"}
-                      layout={"fill"}
-                    />
-                    <div
-                      className={
-                        "absolute top-0 left-0 w-full h-full bg-tertiary-500 text-red-700 cursor-pointer hover:opacity-60 opacity-0 transition-opacity flex items-center justify-center"
-                      }
-                    >
-                      <FontAwesomeIcon icon={faTrash} size={"2x"} />
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
-
-            <input
-              type="file"
-              id={"image-selector-input"}
-              className={"hidden"}
-              multiple
-              onChange={onInputImage}
+            <Controller
+              name={"images"}
+              control={control}
+              render={({ field, fieldState: { error } }) => (
+                <MultiImageInput
+                  maxFiles={MAX_IMAGE_COUNT}
+                  {...field}
+                  errorMessage={error?.message}
+                />
+              )}
             />
-            <label
-              htmlFor={"image-selector-input"}
-              className={
-                "bg-tertiary px-4 py-2 text-white rounded cursor-pointer"
-              }
-            >
-              Add an image
-            </label>
           </div>
 
           <div className={"flex justify-center mt-5"}>
