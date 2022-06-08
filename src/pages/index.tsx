@@ -3,6 +3,7 @@ import { useInfiniteQuery } from "react-query";
 import { listPosts, POSTS_QUERY_NAME } from "../services/posts/listPosts";
 import { useState } from "react";
 import { Feed } from "../components/Feed";
+import { InfiniteScrollContainer } from "../components/InfiniteScrollContainer";
 
 const Home: NextPage = () => {
   const [startDate, _setStartDate] = useState(new Date().toISOString());
@@ -20,14 +21,13 @@ const Home: NextPage = () => {
   );
 
   return (
-    <main className={"bg-background h-screen pt-5"}>
-      <section
-        id="feed"
-        className={"bg-gray-100 p-5 container mx-auto h-full flex flex-col"}
-      >
-        <Feed infiniteQueryState={feedInfiniteQueryState} />
-      </section>
-    </main>
+    <InfiniteScrollContainer
+      fetchNextPage={feedInfiniteQueryState.fetchNextPage}
+      hasNextPage={feedInfiniteQueryState.hasNextPage ?? true}
+      id={"feed"}
+    >
+      <Feed data={feedInfiniteQueryState.data} />
+    </InfiniteScrollContainer>
   );
 };
 
