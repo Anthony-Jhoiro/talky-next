@@ -43,7 +43,7 @@ const UserProfileScreen: NextPage<ProfileScreenProps> = ({ profile }) => {
       </section>
 
       <section id="user-feed">
-        <Feed infiniteQueryState={feedInfiniteQueryState} />
+        <Feed data={feedInfiniteQueryState.data} />
       </section>
     </main>
   );

@@ -33,11 +33,9 @@ const FriendRequestsScreen = () => {
         data &&
         data.size &&
         Array.from(data).map((friendRequest) => (
-          <>
-            <div key={friendRequest.id}>
-              <FriendRequest friendRequest={friendRequest} />
-            </div>
-          </>
+          <div key={friendRequest.id}>
+            <FriendRequest friendRequest={friendRequest} />
+          </div>
         ))}
 
       {!isFetching && data && Array.from(data).length === 0 && (
