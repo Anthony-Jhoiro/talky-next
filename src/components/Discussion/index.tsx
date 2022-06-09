@@ -4,6 +4,9 @@ import Link from "next/link";
 import { ProfilePicture } from "../ProfilePicture";
 import { FriendshipMessageBubble } from "./FriendshipMessageBubble";
 import { DiscussionInput } from "./DiscussionInput";
+import clsx from "clsx";
+import { LoadingIndicator } from "../LoadingIndicator";
+import InfiniteScroll from "react-infinite-scroller";
 
 export interface DiscussionProps {
   messages: MessageDto[];
@@ -13,6 +16,7 @@ export interface DiscussionProps {
   headerUser: UserDto;
   friendship: FriendshipDto;
   isSendingMessage: boolean;
+  hasPreviousPage: boolean;
 }
 
 export const Discussion: FC<DiscussionProps> = ({
@@ -21,6 +25,9 @@ export const Discussion: FC<DiscussionProps> = ({
   headerUser,
   friendship,
   isSendingMessage,
+  fetchPreviousPage,
+  fetchNextPage,
+  hasPreviousPage,
 }) => {
   const messageView = useRef<HTMLDivElement>(null);
 
@@ -33,6 +40,13 @@ export const Discussion: FC<DiscussionProps> = ({
       element.scrollTop = maxScrollTop > 0 ? maxScrollTop : 0;
     }
   }, [messageView]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      fetchNextPage();
+    }, 60 * 1000);
+    return () => clearInterval(interval);
+  }, [fetchNextPage]);
 
   return (
     <div
@@ -49,21 +63,32 @@ export const Discussion: FC<DiscussionProps> = ({
         </Link>
       </div>
 
-      {/* Discussion body */}
-      <div
-        ref={messageView}
-        className={"grow overflow-scroll overflow-x-hidden"}
-      >
-        {friendship &&
-          messages.map((messageDto) => (
-            <div key={messageDto.id} className={""}>
-              <FriendshipMessageBubble
-                friendship={friendship}
-                message={messageDto}
-                otherUserId={headerUser.id as string}
-              />
+      <div className={"grow overflow-scroll overflow-x-hidden"}>
+        {/* Discussion body */}
+        <InfiniteScroll
+          loadMore={() => fetchPreviousPage()}
+          hasMore={hasPreviousPage}
+          isReverse={true}
+          className={clsx("w-full h-full")}
+          threshold={250}
+          useWindow={false}
+          loader={
+            <div className={"flex justify-center"}>
+              <LoadingIndicator />
             </div>
-          ))}
+          }
+        >
+          {friendship &&
+            messages.map((messageDto) => (
+              <div key={messageDto.id} className={""}>
+                <FriendshipMessageBubble
+                  friendship={friendship}
+                  message={messageDto}
+                  otherUserId={headerUser.id as string}
+                />
+              </div>
+            ))}
+        </InfiniteScroll>
       </div>
 
       {/* Discussion input */}
