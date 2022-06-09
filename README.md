@@ -2,6 +2,8 @@
 
 Talky is a small social network project
 
+Production URL : [https://talky.jho.ovh](https://talky.jho.ovh)
+
 ## Setup
 
 - clone the repository
