@@ -12,6 +12,7 @@ export function useDiscussion(
   initialPreviousCursor: string = new Date().toISOString(),
   initialAfterCursor: string = new Date().toISOString()
 ) {
+  const [hasPreviousMessages, setHasPreviousMessages] = useState(true);
   const [previousPageCursor, setPreviousPageCursor] = useState(
     new Date(initialPreviousCursor)
   );
@@ -50,6 +51,8 @@ export function useDiscussion(
       refDate: previousPageCursor,
       limit: PAGE_FETCH_LIMIT,
     });
+
+    setHasPreviousMessages(!newMessages.last);
 
     const newMessagesState = [
       ...(newMessages.content as MessageDto[]).filter((m) =>
@@ -101,5 +104,6 @@ export function useDiscussion(
     fetchPreviousPage,
     sendMessage: _sendMessage,
     isSendingMessage: sendMessageMutation.isLoading,
+    hasPreviousMessages,
   };
 }

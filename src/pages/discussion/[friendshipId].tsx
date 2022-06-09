@@ -37,6 +37,7 @@ const DiscussionScreen: NextPage<DiscussionScreenProps> = ({
     fetchPreviousPage,
     sendMessage,
     isSendingMessage,
+    hasPreviousMessages,
   } = useDiscussion(
     friendshipId as string,
     initialMessages,
@@ -61,6 +62,7 @@ const DiscussionScreen: NextPage<DiscussionScreenProps> = ({
         fetchNextPage={fetchNextPage}
         fetchPreviousPage={fetchPreviousPage}
         onNewMessage={doSendMessage}
+        hasPreviousPage={hasPreviousMessages}
         headerUser={otherUser}
         friendship={friendship}
         isSendingMessage={isSendingMessage}
