@@ -37,7 +37,6 @@ export const getTokenWrapper = (setTokenFound: (_v: string | null) => void) => {
 export const onMessageListener = () =>
   new Promise<MessagePayload>((resolve) => {
     onMessage(messaging, (payload) => {
-      console.log({ payload });
       resolve(payload);
     });
   });
