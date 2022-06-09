@@ -33,7 +33,7 @@ export const Navigation = ({}: NavigationProps) => {
         </Link>
       </div>
       <div className={"flex items-center gap-3"}>
-        {profileIsFetching ? (
+        {profileIsFetching && !profileData ? (
           <LoadingIndicator />
         ) : (
           <>
